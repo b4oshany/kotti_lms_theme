@@ -1,0 +1,9 @@
+<hr />
+
+
+<footer class="footer" version="${api.version | ''}">
+    <div>
+        <strong>Copyright</strong> ${api.site_owner | api.site_title} &copy; ${api.system_time.year}
+        <br/>
+    </div>
+</footer>

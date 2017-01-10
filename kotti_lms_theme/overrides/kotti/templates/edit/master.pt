@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      tal:define="page_slots api.slots;
+                  dummy api.view_needed;
+                  has_location_context api.is_location(context);"
+      metal:define-macro="main">
+
+
+<!-- Mirrored from webapplayers.com/inspinia_admin-v2.4/table_data_tables.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 16 Feb 2016 18:18:09 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title metal:define-slot="page-title">${api.page_title | api.site_title}</title>
+
+    <link href="/fanstatic/kotti_lms_theme/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/fanstatic/kotti_lms_theme/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <link href="/fanstatic/kotti_lms_theme/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+
+    <link href="/fanstatic/kotti_lms_theme/css/animate.css" rel="stylesheet">
+    <link href="/fanstatic/kotti_lms_theme/css/style.css" rel="stylesheet">
+    ${api.render_template('kotti:templates/icons.pt')}
+    <more tal:omit-tag="" metal:define-slot="head-more"></more>
+
+    <!-- 'inhead' slots: support third party injection of things that
+         go into the head -->
+    <tal:slots tal:define="snippets page_slots.inhead"
+               tal:condition="snippets"
+               tal:repeat="snippet snippets"
+               tal:replace="structure snippet" />
+    <script tal:condition="has_location_context">
+      kotti_context_url = '${request.resource_url(context)}';
+    </script>
+
+</head>
+
+<body
+      class="${request.user is not None and 'logged-in'}
+               view-${request.view_name or 'default'}
+               ${'school_user' if request.user.is_school_user else 'not-school-user' | 'no-user'}
+               ${api.body_css_class}"  >
+
+    <div id="wrapper">
+
+
+      <div tal:replace="api.render_template('kotti:templates/editor-bar.pt')" />
+
+        <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom">
+          <nav tal:replace="api.render_template('kotti:templates/view/nav.pt')" />
+        </div>
+
+
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                  <div class="above-content"
+                       tal:condition="has_location_context and page_slots.abovecontent"
+                       tal:content="api.render_template('kotti:templates/render_content_slot.pt', slot=page_slots.abovecontent)">
+                  </div>
+                  <div tal:replace="api.render_template('kotti:templates/messages.pt')" />
+                  <div metal:define-slot="content">
+                    <h1>${context.title}</h1>
+                  </div>
+                  <div class="below-content"
+                       tal:condition="page_slots.belowcontent"
+                       tal:content="api.render_template('kotti:templates/render_content_slot.pt', slot=page_slots.belowcontent)">
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <footer tal:replace="api.render_template('kotti:templates/view/footer.pt')"></footer>
+
+        </div>
+        </div>
+
+
+
+    <tal:slots tal:define="snippets page_slots.beforebodyend"
+               tal:condition="snippets"
+               tal:repeat="snippet snippets"
+               tal:replace="structure snippet" />
+    <!-- Mainly scripts -->
+    <script src="/fanstatic/kotti_lms_theme/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="/fanstatic/kotti_lms_theme/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/fanstatic/kotti_lms_theme/js/plugins/jeditable/jquery.jeditable.js"></script>
+
+    <script src="/fanstatic/kotti_lms_theme/js/plugins/dataTables/datatables.min.js"></script>
+    <!-- Custom and plugin javascript -->
+    <script src="/fanstatic/kotti_lms_theme/js/inspinia.js"></script>
+    <script src="/fanstatic/kotti_lms_theme/js/plugins/pace/pace.min.js"></script>
+
+    <!-- Page-Level Scripts -->
+    <script>
+        $(document).ready(function(){
+            $('.dataTables-example').DataTable({
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy'},
+                    {extend: 'csv'},
+                    {extend: 'excel', title: 'ExampleFile'},
+                    {extend: 'pdf', title: 'ExampleFile'},
+
+                    {extend: 'print',
+                     customize: function (win){
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                    }
+                    }
+                ]
+
+            });
+
+            /* Init DataTables */
+            var oTable = $('#editable').DataTable();
+
+            /* Apply the jEditable handlers to the table */
+            oTable.$('td').editable( 'http://webapplayers.com/example_ajax.php', {
+                "callback": function( sValue, y ) {
+                    var aPos = oTable.fnGetPosition( this );
+                    oTable.fnUpdate( sValue, aPos[0], aPos[1] );
+                },
+                "submitdata": function ( value, settings ) {
+                    return {
+                        "row_id": this.parentNode.getAttribute('id'),
+                        "column": oTable.fnGetPosition( this )[2]
+                    };
+                },
+
+                "width": "90%",
+                "height": "100%"
+            } );
+
+
+        });
+
+        function fnClickAddRow() {
+            $('#editable').dataTable().fnAddData( [
+                "Custom row",
+                "New row",
+                "New row",
+                "New row",
+                "New row" ] );
+
+        }
+    </script>
+
+</body>
+
+
+<!-- Mirrored from webapplayers.com/inspinia_admin-v2.4/table_data_tables.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 16 Feb 2016 18:18:12 GMT -->
+</html>

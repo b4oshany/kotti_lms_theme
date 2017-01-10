@@ -1,0 +1,59 @@
+<nav class="navbar-default navbar-static-side blunav" role="navigation" tal:define="disable_context_links disable_context_links | False">
+    <div class="sidebar-collapse">
+        <ul class="nav metismenu" id="side-menu">
+            <li class="nav-header blunav" tal:condition="request.user is not None">
+                <div tal:replace="api.render_template('kotti:templates/user-nav-bar.pt')" />
+            </li>
+
+
+        <tal:condition tal:condition="api.has_permission('edit')">
+          <li tal:replace="api.render_view('workflow-dropdown')" />
+        </tal:condition>
+
+        <li>
+          <a href="${api.url()}" i18n:translate="">
+            <i class="fa fa-eye-large"></i>
+            <span class="nav-label">View</span>
+          </a>
+        </li>
+
+        <tal:condition tal:condition="not disable_context_links">
+          <tal:repeat tal:repeat="link api.edit_links">
+            <tal:block tal:condition="hasattr(link, 'name')" >
+              <li>
+                <a href="${link.url(context, request)}" i18n:translate="">
+                  <i class="fa fa-gear-large"></i>
+                  <span class="nav-label">${link.title}</span>
+                </a>
+              </li>
+            </tal:block>
+            <tal:block tal:condition="hasattr(link, 'children')" >
+              <li>
+                <a href="#" i18n:translate="">
+                  <i class="fa fa-gear-large"></i>
+                  <span class="nav-label">${link.title.title()}</span>
+                  <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level collapse">
+                  <li tal:repeat="sublink link.children">
+                    ${sublink(context, request)}
+                  </li>
+                </ul>
+              </li>
+            </tal:block>
+          </tal:repeat>
+        </tal:condition>
+
+        <tal:condition tal:condition="not disable_context_links">
+          <tal:condition tal:condition="api.has_permission('edit')">
+            <ul tal:replace="api.render_view('actions-dropdown')" />
+          </tal:condition>
+          <tal:condition tal:condition="api.has_permission('add')">
+            <li class="divider-vertical"></li>
+            <ul tal:replace="api.render_view('add-dropdown')" />
+          </tal:condition>
+        </tal:condition>
+
+        </ul>
+    </div>
+</nav>

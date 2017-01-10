@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      tal:define="page_slots api.slots;
+                  dummy api.view_needed;
+                  has_location_context api.is_location(context);"
+      metal:define-macro="main">
+
+
+<!-- Mirrored from webapplayers.com/inspinia_admin-v2.4/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 16 Feb 2016 18:11:14 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>${api.page_title | api.site_title}</title>
+
+    <link rel="stylesheet" type="text/css" href="/fanstatic/kotti_lms_theme/ext/chartist/dist/chartist.min.css" />
+    <link rel="stylesheet" type="text/css" href="/fanstatic/kotti_lms_theme/ext/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="/fanstatic/kotti_lms_theme/ext/select2/dist/css/select2.min.css" />
+    <link rel="stylesheet" type="text/css" href="/fanstatic/kotti_lms_theme/front-styles.css" />
+    <link rel="stylesheet" type="text/css" href="/fanstatic/kotti_lms_theme/styles.css" />
+    <link rel="stylesheet" type="text/css" href="/fanstatic/bootstrap/css/bootstrap.css" />
+
+    ${api.render_template('kotti:templates/icons.pt')}
+
+
+    <link href="/fanstatic/kotti_lms_theme/css/animate.css" rel="stylesheet">
+    <link href="/fanstatic/kotti_lms_theme/css/style.css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen animated fadeInDown">
+        <div>
+          <div class="above-content"
+               tal:condition="has_location_context and page_slots.abovecontent"
+               tal:content="api.render_template('kotti:templates/render_content_slot.pt', slot=page_slots.abovecontent)">
+          </div>
+          <div tal:replace="api.render_template('kotti:templates/messages.pt')"></div>
+          <div>
+            <img alt="image" class="login-logo" src="/fanstatic/kotti_lms_theme/img/dpis-logo.jpg">
+          </div>
+          <div class="notfound">
+            <h4 i18n:translate="">Not Found</h4>
+            <p i18n:translate="">The resource could not be found</p>
+            <a href="/" class="btn btn-default btn-block">
+              <span class="fa fa-angle-left"></span>
+              Back to homepage
+            </a>
+          </div>
+        </div>
+    </div>
+    <!-- Mainly scripts -->
+    <script src="/fanstatic/kotti_lms_theme/js/jquery-2.1.1.js"></script>
+    <script src="/fanstatic/kotti_lms_theme/js/bootstrap.min.js"></script>
+
+</body>
+
+
+<!-- Mirrored from webapplayers.com/inspinia_admin-v2.4/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 16 Feb 2016 18:11:14 GMT -->
+</html>

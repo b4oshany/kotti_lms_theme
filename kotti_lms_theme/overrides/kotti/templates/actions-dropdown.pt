@@ -1,0 +1,16 @@
+<li class="dropdown" tal:condition="actions" i18n:domain="Kotti">
+  <a href="#">
+    <i class="fa fa-hand-lizard-o-large"></i>
+    <span class="nav-label" i18n:translate="">Actions</span>
+    <b class="caret"></b>
+  </a>
+  <ul class="nav nav-second-level collapse">
+    <li tal:repeat="link actions">
+      <a href="${link.url(context, request)}">
+        <span class="nav-label">${link.title}</span>
+        <span class="fa arrow"></span>
+      </a>
+    </li>
+    <li tal:replace="api.render_view('default-view-selector')" />
+  </ul>
+</li>

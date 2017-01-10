@@ -1,0 +1,26 @@
+<li class="dropdown" tal:condition="factories" i18n:domain="Kotti">
+  <a href="#" >
+    <i class="fa fa-plus-square-large"></i>
+    <span class="nav-label">Add</span>
+    <span class="fa arrow"></span>
+  </a>
+  <ul class="nav nav-second-level collapse">
+    <tal:block tal:repeat="factory factories">
+      <li tal:define="factory_action factory.type_info.add_view" class="dropdown-action ${factory_action}" >
+        <a href="${api.url(context, factory_action)}">
+
+          <span class="nav-label">${factory.type_info.title}</span>
+
+        </a>
+      </li>
+    </tal:block>
+    <tal:block tal:condition="factories">
+      <li class="divider"></li>
+      <li>
+        <a href="${api.url(context, 'upload')}" i18n:translate="">
+          Upload Content
+        </a>
+      </li>
+    </tal:block>
+  </ul>
+</li>

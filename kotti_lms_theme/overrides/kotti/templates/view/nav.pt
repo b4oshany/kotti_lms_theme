@@ -1,0 +1,40 @@
+<nav class="navbar navbar-static-top" id="nav-top1" role="navigation" style="margin-bottom: 0">
+    <ul class="nav navbar-nav navbar-left">
+      <li>
+        <a tal:condition="request.has_permission('edit', context)" class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#">
+          <i class="fa fa-bars"></i>
+        </a>
+      </li>
+    </ul>
+  <ul class="nav navbar-nav navbar-top-links navbar-right">
+    <li tal:condition="request.has_permission('admin')">
+      <div tal:replace="api.render_template('kotti:templates/view/search.pt')" />
+    </li>
+    <li tal:condition="request.user is None">
+      <a tal:attributes="href api.url(api.root, '@@login', query={'came_from': request.url, })">
+          Log in
+        </a>
+    </li>
+
+      <li class="nav-header blunav" tal:condition="request.user is not None">
+          <div tal:replace="api.render_template('kotti:templates/user-nav-bar.pt')" />
+      </li>
+  </ul>
+
+</nav>
+<div class="colored-fullwidth-gradient vc_row"></div>
+<nav class="navbar navbar-static-top container-fluid" id="nav-menu-top" role="navigation" style="margin-bottom: 0">
+    <ul class="nav navbar-nav navbar-left">
+      <li id="main-brand">
+        <a href="${api.url(api.root)}">
+          ${api.site_title}
+        </a>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right navbar-top-links">
+      <tal:block tal:repeat="link api.NAV_LINKS">
+        ${link(api.root, request)}
+      </tal:block>
+    </ul>
+
+</nav>

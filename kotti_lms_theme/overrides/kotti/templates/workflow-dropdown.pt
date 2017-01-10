@@ -1,0 +1,28 @@
+<tal:block>
+<li tal:condition="current_state and transitions"
+    i18n:domain="Kotti">
+  <a href="#">
+    <i class="fa fa-window-restore-large"></i>
+    <span class="nav-label state-${current_state['name']}">
+      ${current_state['title']}
+    </span>
+    <span class="fa arrow"></span>
+  </a>
+  <ul class="nav nav-second-level collapse">
+    <li tal:repeat="trans transitions">
+      <a tal:attributes="href api.url(context, '@@workflow-change', query={'new_state': trans['to_state']})"
+         i18n:translate="">
+        Make <span i18n:name="state">${states[trans['to_state']]['title']}</span>
+      </a>
+    </li>
+  </ul>
+</li>
+
+<li tal:condition="current_state and not transitions">
+  <a class="state-${current_state['name']}">
+
+    <i class="fa fa-window-restore-large"></i>
+    <span class="nav-label">${current_state['title']}</span>
+  </a>
+</li>
+</tal:block>

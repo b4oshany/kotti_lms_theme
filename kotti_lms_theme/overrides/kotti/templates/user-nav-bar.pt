@@ -1,0 +1,47 @@
+
+<div class="dropdown">
+    <a data-toggle="dropdown" href="#">
+        <span class="clear" style="text-align: center">
+          <img tal:condition="request.user is not None" class="img-circle profile-image"
+              src="${api.avatar_url(request.user, size=50)}" alt="Gravatar"
+                       i18n:attributes="alt"/>
+          <span class="text-muted text-xs block">
+            <span class="nav-label user-title">${request.user.title if request.user != None else 'Candidate'}</span>
+            <b class="caret"></b>
+            <span class="nav-label user-name">${request.user.name | ''}</span>
+          </span>
+        </span>
+       </a>
+      <ul class="dropdown-menu">
+        <li>
+          <a href="${api.url(api.root, '@@prefs')}">
+            <b class="icon icon-user"></b>
+            <span i18n:translate="">Preferences</span>
+          </a>
+        </li>
+        <tal:condition tal:condition="api.has_permission('admin', api.root)">
+          <li class="divider"></li>
+          <li role="presentation" class="dropdown-header" i18n:translate="">
+            Site Setup
+          </li>
+        </tal:condition>
+          <!-- <li tal:condition="api.has_permission('edit', context)" >
+            <a tal:attributes="href api.do_toggle_admin_extras(request, not api.toggle_admin_extras)"
+              tal:content="('Show' if not api.toggle_admin_extras else 'Hide') + ' extra features'"></a>
+          </li> -->
+        <tal:condition tal:condition="api.has_permission('admin', api.root)">
+          <li>
+          <li tal:repeat="link api.site_setup_links">
+            <a href="${link.url(api.root, request)}">${link.title}</a>
+          </li>
+          <li class="divider"></li>
+        </tal:condition>
+        <li>
+          <a tal:attributes="href api.url(api.root, '@@logout', query={'came_from': request.url, })">
+            <b class="icon icon-off"></b>
+            <span i18n:translate="">Logout</span>
+          </a>
+        </li>
+      </ul>
+
+</div>
