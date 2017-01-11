@@ -18,30 +18,7 @@
         </li>
 
         <tal:condition tal:condition="not disable_context_links">
-          <tal:repeat tal:repeat="link api.edit_links">
-            <tal:block tal:condition="hasattr(link, 'name')" >
-              <li>
-                <a href="${link.url(context, request)}" i18n:translate="">
-                  <i class="fa fa-gear-large"></i>
-                  <span class="nav-label">${link.title}</span>
-                </a>
-              </li>
-            </tal:block>
-            <tal:block tal:condition="hasattr(link, 'children')" >
-              <li>
-                <a href="#" i18n:translate="">
-                  <i class="fa fa-gear-large"></i>
-                  <span class="nav-label">${link.title.title()}</span>
-                  <span class="fa arrow"></span>
-                </a>
-                <ul class="nav nav-second-level collapse">
-                  <li tal:repeat="sublink link.children">
-                    ${sublink(context, request)}
-                  </li>
-                </ul>
-              </li>
-            </tal:block>
-          </tal:repeat>
+          <div tal:replace="api.render_template('kotti_lms_theme:templates/side_menu_links.pt', links=api.edit_links)">
         </tal:condition>
 
         <tal:condition tal:condition="not disable_context_links">
@@ -53,6 +30,8 @@
             <ul tal:replace="api.render_view('add-dropdown')" />
           </tal:condition>
         </tal:condition>
+        
+        <div tal:replace="api.render_template('kotti_lms_theme:templates/side_menu_links.pt', links=api.SIDE_NAV_MENU)">
 
         </ul>
     </div>

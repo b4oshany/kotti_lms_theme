@@ -4,7 +4,7 @@
 Created on 2017-01-10
 :author: Oshane Bailey (b4.oshany@gmail.com)
 """
-
+from datetime import datetime
 from kotti.resources import File
 from pyramid.i18n import TranslationStringFactory
 from kotti.views.util import TemplateAPI
@@ -12,14 +12,22 @@ from kotti.util import Link
 
 _ = TranslationStringFactory('kotti_lms_theme')
 
-NAV_LINKS = []
-
+TOP_NAV_MENU = []
+SIDE_NAV_MENU = []
 
 class LMSTemplateAPI(TemplateAPI):
 
     @property
-    def NAV_LINKS(self):
-        return NAV_LINKS
+    def TOP_NAV_MENU(self):
+        return TOP_NAV_MENU
+
+    @property
+    def SIDE_NAV_MENU(self):
+        return SIDE_NAV_MENU
+        
+    @property
+    def system_time(self):
+        return datetime.now()
 
 
 def kotti_configure(settings):
@@ -48,6 +56,7 @@ def includeme(config):
     :type config: :class:`pyramid.config.Configurator`
     """
 
+    config.override_asset('kotti', 'kotti_lms_theme:')
     config.add_translation_dirs('kotti_lms_theme:locale')
     config.add_static_view('static-kotti_lms_theme', 'kotti_lms_theme:static')
 

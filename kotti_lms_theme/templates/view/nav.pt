@@ -32,7 +32,7 @@
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right navbar-top-links">
-      <tal:block tal:repeat="link api.NAV_LINKS">
+      <tal:block tal:repeat="link api.TOP_NAV_MENU">
         ${link(api.root, request)}
       </tal:block>
     </ul>
