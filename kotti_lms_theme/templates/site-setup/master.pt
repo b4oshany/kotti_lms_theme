@@ -42,6 +42,7 @@
 <body
       class="${request.user is not None and 'logged-in'}
                view-${request.view_name or 'default'}
+               ${'can-edit' if request.has_permission('edit', context) else 'can-view'}
                ${'school_user' if request.user.is_school_user else 'not-school-user' | 'no-user'}
                ${api.body_css_class}"  >
 

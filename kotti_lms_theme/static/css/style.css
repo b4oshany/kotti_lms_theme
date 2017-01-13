@@ -388,7 +388,7 @@ body.mini-navbar .nav-header.blunav {
 body.canvas-menu .nav-header {
   padding: 33px 25px;
 }
-body.logged-in.mini-navbar #page-wrapper {
+body.logged-in.can-edit.mini-navbar #page-wrapper {
   margin: 0 0 0 70px;
 }
 body.fixed-sidebar.mini-navbar .footer,
@@ -415,7 +415,7 @@ body.fixed-sidebar.mini-navbar #page-wrapper {
 body.fixed-sidebar.mini-navbar-forced #page-wrapper {
   margin: 0 0 0 0 !important;
 }
-body.logged-in.body-small.fixed-sidebar.mini-navbar #page-wrapper {
+body.can-edit.logged-in.body-small.fixed-sidebar.mini-navbar #page-wrapper {
   margin: 0 0 0 220px;
 }
 body.body-small.fixed-sidebar.mini-navbar .navbar-static-side {
@@ -3456,7 +3456,7 @@ video {
   position: relative !important;
 }
 @media (min-width: 768px) {
-  body.logged-in #page-wrapper {
+  body.can-edit.logged-in #page-wrapper {
     position: inherit;
     margin: 0 0 0 240px;
     min-height: 2002px;
@@ -8119,7 +8119,7 @@ body.md-skin {
   display: none;
 }
 @media (min-width: 768px) {
-  body.logged-in #page-wrapper {
+  body.can-edit.logged-in #page-wrapper {
     position: inherit;
     margin: 0 0 0 220px;
     min-height: 1200px;
